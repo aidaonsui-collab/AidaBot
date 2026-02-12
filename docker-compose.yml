@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  market-maker:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - EXCHANGE=${EXCHANGE:-flowx}
+      - SYMBOL=${SYMBOL:-BTC}
+      - PRICE_ORACLE=${PRICE_ORACLE:-binance}
+      - SPREAD_BPS=${SPREAD_BPS:-10}
+      - ORDER_SIZE=${ORDER_SIZE:-0.001}
+      - MAX_POSITION=${MAX_POSITION:-1}
+      - CLOSE_THRESHOLD=${CLOSE_THRESHOLD:-0.8}
+      - SUI_PRIVATE_KEY=${SUI_PRIVATE_KEY}
+      - EVM_PRIVATE_KEY=${EVM_PRIVATE_KEY}
+      - ENABLE_LOGGING=${ENABLE_LOGGING:-true}
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
